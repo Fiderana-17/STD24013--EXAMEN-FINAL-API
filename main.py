@@ -31,3 +31,11 @@ def create_phone(phone: Phone):
 @app.get("/phones", response_model=List[Phone])
 def get_phones():
     return phones_db
+
+# d. GET /phones/{id}
+@app.get("/phones/{id}", response_model=Phone)
+def get_phone(id: str):
+    for phone in phones_db:
+        if phone.identifier == id:
+            return phone
+    raise HTTPException(status_code=404, detail=f"Phone with id '{id}' not found")
